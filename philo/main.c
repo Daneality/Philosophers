@@ -6,7 +6,7 @@
 /*   By: dsas <dsas@student.42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 10:49:53 by dsas              #+#    #+#             */
-/*   Updated: 2023/03/20 12:02:12 by dsas             ###   ########.fr       */
+/*   Updated: 2023/03/20 12:18:47 by dsas             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,6 @@ int	main(int argc, char **argv){
 	philos = malloc (sizeof(t_philo) * ft_atoi(argv[1]));
 	data = parse_data(argc, argc);
 	init_threads(philos, data);
-	
+	join_threads()
 	
 }
