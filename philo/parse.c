@@ -6,7 +6,7 @@
 /*   By: dsas <dsas@student.42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 11:03:32 by dsas              #+#    #+#             */
-/*   Updated: 2023/03/31 13:18:12 by dsas             ###   ########.fr       */
+/*   Updated: 2023/03/31 13:25:16 by dsas             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,6 @@
 t_gdata *parse_data(int argc, char **argv)
 {
 	char	*checked;
+	char 	*marked;
 }
 
