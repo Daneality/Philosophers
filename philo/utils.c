@@ -6,7 +6,7 @@
 /*   By: dsas <dsas@student.42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 10:25:17 by dsas              #+#    #+#             */
-/*   Updated: 2023/03/20 10:43:05 by dsas             ###   ########.fr       */
+/*   Updated: 2023/04/05 20:59:47 by dsas             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,12 @@ int	ft_atoi(const char *nptr)
 	}
 	sum *= sign;
 	return (sum);
+}
+
+void	ft_error_input(void)
+{
+	printf("Wrong input!\n");
+	printf("Following args are needed or allowed\n");
+	printf("number_of_philosophers time_to_die time_to_eat time_to_sleep ");
+	printf("[number_of_times_each_philosopher_must_eat]\n");
 }

@@ -6,11 +6,32 @@
 /*   By: dsas <dsas@student.42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 11:03:32 by dsas              #+#    #+#             */
-/*   Updated: 2023/04/05 16:23:43 by dsas             ###   ########.fr       */
+/*   Updated: 2023/04/05 20:26:06 by dsas             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	init_philos(t_philo *p, t_gdata *params)
+{
+	int	k;
+
+	k = -1;
+	while (++k < params->nop)
+	{
+		p[k].start = 0;
+		p[k].id = k + 1;
+		p[k].phils = 0;
+		p[k].meal = 0;
+		p[k].forkl = &params->fork[k];
+		if (p[k].id == params->nop)
+			p[k].forkr = &params->fork[0];
+		else
+			p[k].forkr = &params->fork[k + 1];
+		p[k].params = params;
+		p[k].iter = 0;
+	}
+}
 
 static int	is_digit(char c)
 {
@@ -40,16 +61,37 @@ int	check_input(char **av)
 			return (0);
 		i++;
 	}
-	if (ft_atoi(av[0]) <= 0 || ft_atoi(av[1]) <= 0 || \
-	ft_atoi(av[2]) <= 0 || ft_atoi(av[3]) <= 0)
+	if (ft_atoi(av[1]) <= 0 || ft_atoi(av[2]) <= 0 || \
+		ft_atoi(av[3]) <= 0 || ft_atoi(av[4]) <= 0 || \
+		(av[4] && ft_atoi(av[4])) <= 0)
 		return (0);
 	return (1);
 }
 
-
 t_gdata *parse_data(int argc, char **argv)
 {
-	char	*checked;
-	char 	*marked;
-}
+	t_gdata	*params;
 
+	params = malloc(sizeof(t_gdata));
+	if (params == NULL)
+		return (NULL);
+	params->death = malloc(sizeof(pthread_mutex_t));
+	if (params->death == NULL)
+		return (NULL);
+	params->fork = malloc(sizeof(pthread_mutex_t) * ft_atoi(argv[1]));
+	if (params->fork == NULL)
+		return (NULL);
+	params->ttd = ft_atoi(argv[2]);
+	params->tte = ft_atoi(argv[3]);
+	params->check_tme = 0;
+	params->tts = ft_atoi(argv[4]);
+	if (argv[5])
+	{
+		params->check_tme = 1;
+		params->tme = ft_atoi(argv[5]);
+	}
+	params->nop = ft_atoi(argv[1]);
+	params->ready = 0;
+	params->over = 0;
+	return (params);
+}
