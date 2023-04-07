@@ -6,107 +6,51 @@
 /*   By: dsas <dsas@student.42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 15:09:15 by dsas              #+#    #+#             */
-/*   Updated: 2023/04/07 17:02:27 by dsas             ###   ########.fr       */
+/*   Updated: 2023/04/07 19:26:15 by dsas             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	someone_died(t_philo *p)
-{
-	ft_print(p, 5);
-	pthread_mutex_unlock(p->forkl);
-	pthread_mutex_unlock(p->forkr);
-	return (1);
-}
-
-int	check_death(t_philo *p)
-{
-	long int	now;
-
-	pthread_mutex_lock(p->params->print);
-	now = time_now() - p->meal;
-	if (now >= p->params->ttd)
-	{
-		pthread_mutex_unlock(p->params->print);
-		return (someone_died(p));
-	}
-	pthread_mutex_unlock(p->params->print);
-	return (0);
-}
-
-void	check_threads(t_philo *p)
-{
-	int	i;
-
-	while (!p->params->ready)
-		continue ;
-	while (!p->params->over)
-	{
-		i = -1;
-		while (++i < p->params->num_p)
-		{
-			if (check_death(&p[i]))
-				p->params->over = 1;
-		}
-		if (p->params->eated == p->params->num_p)
-			p->params->over = 1;
-	}
-	return ;
-}
-
 void	ft_eat(t_philo *p)
 {
-	pthread_mutex_lock(p->forkl);
+	t_gdata	*par;
+
+	par = p->params;
+	sem_wait(par->fork);
 	ft_print(p, 4);
-	pthread_mutex_lock(p->forkr);
+	sem_wait(par->fork);
 	ft_print(p, 4);
 	p->meal = time_now();
-	p->iter++;
 	ft_print(p, 1);
-	ft_usleep(p->params->tte);
-	pthread_mutex_unlock(p->forkl);
-	pthread_mutex_unlock(p->forkr);
+	ft_usleep(par->tte);
+	p->iter++;
+	sem_post(par->fork);
+	sem_post(par->fork);
 }
 
-void	*routine(void *phil)
+void	routine(t_philo *p)
 {
-	t_philo	*p;
+	t_gdata	*par;
 
-	p = (t_philo *)phil;
-	while (!(p->params->ready))
-		continue ;
-	if (p->id & 1)
-		ft_usleep(p->params->tte * 0.9 + 1);
-	while (!p->params->over)
+	par = p->params;
+	while (!par->dead)
 	{
-		ft_eat(p);
-		pthread_mutex_lock(p->params->print);
-		if (p->params->check_tme && \
-			p->iter == p->params->tme)
+		if (par->num_p == 1)
 		{
-			p->params->eated++;
-			pthread_mutex_unlock(p->params->print);
-			return (NULL);
+			ft_usleep(par->ttd);
+			printf("%ld %d %s\n", p->meal - p->start \
+			+ p->params->ttd, p->id, "died\n");
+			exit (1);
 		}
-		pthread_mutex_unlock(p->params->print);
+		ft_eat(p);
+		if (p->iter == par->tme)
+			exit (0);
 		ft_print(p, 2);
-		ft_usleep(p->params->tts);
+		ft_usleep(par->tts);
 		ft_print(p, 3);
 	}
-	return (NULL);
+	exit (0);
 }
 
-void	free_all(t_philo *p)
-{
-	int	i;
 
-	i = -1;
-	while (++i < p->params->num_p)
-		pthread_mutex_destroy(p[i].forkl);
-	pthread_mutex_destroy(p->params->print);
-	free(p->params->print);
-	free(p->params->fork);
-	free(p->params);
-	free(p);
-}

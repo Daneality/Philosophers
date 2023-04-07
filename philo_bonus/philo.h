@@ -6,7 +6,7 @@
 /*   By: dsas <dsas@student.42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 10:25:28 by dsas              #+#    #+#             */
-/*   Updated: 2023/04/07 17:02:58 by dsas             ###   ########.fr       */
+/*   Updated: 2023/04/07 19:28:52 by dsas             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <string.h>
 # include <pthread.h>
 # include <sys/time.h>
+# include <semaphore.h>
+# include <signal.h>
 
 typedef struct s_gdata
 {
@@ -31,8 +33,9 @@ typedef struct s_gdata
 	int				num_p;
 	int				check_tme;
 	int				eated;
-	pthread_mutex_t	*print;
-	pthread_mutex_t	*fork;
+	int				dead;
+	sem_t			*print;
+	sem_t			*fork;
 } t_gdata;
 
 typedef struct s_philo
@@ -41,9 +44,7 @@ typedef struct s_philo
 	int				iter;
 	long int		start;
 	long int		meal;
-	pthread_t		thread;
-	pthread_mutex_t	*forkl;
-	pthread_mutex_t	*forkr;
+	int				pid;
 	t_gdata			*params;
 } t_philo;
 
@@ -54,7 +55,7 @@ int			ft_atoi(const char *nptr);
 int			check_input(char **av);
 void		init_philos(t_philo *p, t_gdata *params);
 void		init_threads(t_philo *p, t_gdata *params);
-void		*routine(void *phil);
+void		routine(t_philo *p);
 void		check_threads(t_philo *p);
 void		ft_print(t_philo *p, int i);
 void		ft_error_input(void);

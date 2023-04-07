@@ -6,7 +6,7 @@
 /*   By: dsas <dsas@student.42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 10:25:17 by dsas              #+#    #+#             */
-/*   Updated: 2023/04/07 17:17:40 by dsas             ###   ########.fr       */
+/*   Updated: 2023/04/07 19:25:24 by dsas             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ int	ft_atoi(const char *nptr)
 
 void	ft_print(t_philo *p, int i)
 {
-	pthread_mutex_lock(p->params->print);
+	sem_wait(p->params->print);
 	if (p->params->over)
 	{
-		pthread_mutex_unlock(p->params->print);
+		sem_post(p->params->print);
 		return ;
 	}
 	if (i == 1)
@@ -77,7 +77,7 @@ void	ft_print(t_philo *p, int i)
 		printf("%llu %d has taken fork\n", time_now() - p->start, p->id);
 	else if (i == 5)
 		printf("%llu %d died\n", time_now() - p->start, p->id);
-	pthread_mutex_unlock(p->params->print);
+	sem_post(p->params->print);
 }
 
 void	ft_error_input(void)
