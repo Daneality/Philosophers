@@ -6,7 +6,7 @@
 /*   By: dsas <dsas@student.42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 11:03:32 by dsas              #+#    #+#             */
-/*   Updated: 2023/04/07 17:14:07 by dsas             ###   ########.fr       */
+/*   Updated: 2023/04/10 17:39:49 by dsas             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	check_input(char **av)
 	return (1);
 }
 
-t_gdata *parse_data(int argc, char **argv)
+t_gdata	*parse_data(char **argv)
 {
 	t_gdata	*params;
 

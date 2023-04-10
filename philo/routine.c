@@ -6,19 +6,11 @@
 /*   By: dsas <dsas@student.42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 15:09:15 by dsas              #+#    #+#             */
-/*   Updated: 2023/04/07 17:02:27 by dsas             ###   ########.fr       */
+/*   Updated: 2023/04/10 17:46:44 by dsas             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-int	someone_died(t_philo *p)
-{
-	ft_print(p, 5);
-	pthread_mutex_unlock(p->forkl);
-	pthread_mutex_unlock(p->forkr);
-	return (1);
-}
 
 int	check_death(t_philo *p)
 {
@@ -29,7 +21,10 @@ int	check_death(t_philo *p)
 	if (now >= p->params->ttd)
 	{
 		pthread_mutex_unlock(p->params->print);
-		return (someone_died(p));
+		ft_print(p, 5);
+		pthread_mutex_unlock(p->forkl);
+		pthread_mutex_unlock(p->forkr);
+		return (1);
 	}
 	pthread_mutex_unlock(p->params->print);
 	return (0);

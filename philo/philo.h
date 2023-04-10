@@ -6,7 +6,7 @@
 /*   By: dsas <dsas@student.42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 10:25:28 by dsas              #+#    #+#             */
-/*   Updated: 2023/04/07 17:02:58 by dsas             ###   ########.fr       */
+/*   Updated: 2023/04/10 17:40:15 by dsas             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_gdata
 	int				eated;
 	pthread_mutex_t	*print;
 	pthread_mutex_t	*fork;
-} t_gdata;
+}				t_gdata;
 
 typedef struct s_philo
 {
@@ -45,8 +45,7 @@ typedef struct s_philo
 	pthread_mutex_t	*forkl;
 	pthread_mutex_t	*forkr;
 	t_gdata			*params;
-} t_philo;
-
+}				t_philo;
 
 uint64_t	time_now(void);
 void		ft_usleep(long int time);
@@ -58,8 +57,7 @@ void		*routine(void *phil);
 void		check_threads(t_philo *p);
 void		ft_print(t_philo *p, int i);
 void		ft_error_input(void);
-t_gdata		*parse_data(int argc, char **argv);
+t_gdata		*parse_data(char **argv);
 void		free_all(t_philo *p);
-
 
 #endif

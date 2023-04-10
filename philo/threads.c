@@ -6,13 +6,13 @@
 /*   By: dsas <dsas@student.42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 20:26:59 by dsas              #+#    #+#             */
-/*   Updated: 2023/04/06 17:55:18 by dsas             ###   ########.fr       */
+/*   Updated: 2023/04/10 17:40:44 by dsas             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void create_threads(t_philo *p, t_gdata *params)
+void	create_threads(t_philo *p)
 {
 	int			i;
 	long int	k;
@@ -30,7 +30,7 @@ void create_threads(t_philo *p, t_gdata *params)
 	p->params->ready = 1;
 }
 
-void init_mutex(t_philo *p, t_gdata *params)
+void	init_mutex(t_philo *p, t_gdata *params)
 {
 	int	i;
 
@@ -43,6 +43,6 @@ void init_mutex(t_philo *p, t_gdata *params)
 void	init_threads(t_philo *p, t_gdata *params)
 {
 	init_mutex(p, params);
-	create_threads(p, params);
-	check_threads(p);	
+	create_threads(p);
+	check_threads(p);
 }

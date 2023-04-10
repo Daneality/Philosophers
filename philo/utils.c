@@ -6,7 +6,7 @@
 /*   By: dsas <dsas@student.42wolfsburg.de>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 10:25:17 by dsas              #+#    #+#             */
-/*   Updated: 2023/04/07 18:22:03 by dsas             ###   ########.fr       */
+/*   Updated: 2023/04/10 17:40:58 by dsas             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_usleep(long int time)
 	long int	start_time;
 
 	start_time = time_now();
-	while ((time_now() - start_time) < time)
+	while ((time_now() - start_time) < (unsigned long long) time)
 		usleep(150);
 }
 
@@ -80,7 +80,7 @@ void	ft_print(t_philo *p, int i)
 	pthread_mutex_unlock(p->params->print);
 }
 
-void	ft_error_input(void) 
+void	ft_error_input(void)
 {
 	printf("Wrong input!\n");
 	printf("Following args are needed or allowed\n");
